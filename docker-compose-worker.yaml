@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  prefect-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - prefect-server
+      - postgres
+      - minio
+    env_file:
+    - .env
+    environment:
+      PREFECT_API_URL: "http://prefect-server:4200/api"
+      PREFECT_API_AUTH_STRING: "admin:pass"
+      APP_CONFIG__S3__ENDPOINT_URL: "http://minio:9000"
+      APP_CONFIG__DB__HOST: "postgres"
+      APP_CONFIG__DB__PORT: "5432"
+      APP_CONFIG__DB__USERNAME: "postgres"
+      APP_CONFIG__DB__PASSWORD: "postgres"
+      APP_CONFIG__DB__DATABASE: "prefect-pipe"
+      APP_CONFIG__S3__ACCESS_KEY: "minioadmin"
+      APP_CONFIG__S3__SECRET_KEY: "minioadmin"
+      APP_CONFIG__S3__BUCKET: "prefect-pipe-bucket"
+      APP_CONFIG__S3__USE_SSL: "False"
+    networks:
+      - prefect-network
+
+networks:
+  prefect-network:
+    external: true

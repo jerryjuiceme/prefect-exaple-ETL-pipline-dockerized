@@ -3,36 +3,38 @@ services:
 
   prefect-server:
     image: prefecthq/prefect:3-latest
-    command:  prefect server start --host 0.0.0.0
+    command: prefect server start --host 0.0.0.0
     ports:
       - "4200:4200"
     environment:
       PREFECT_LOGGING_LEVEL: INFO
       PREFECT_SERVER_API_AUTH_STRING: "admin:pass"
-      # PREFECT_SERVER_API_HOST: 0.0.0.0
-
     volumes:
       - prefect_data:/root/.prefect
+    networks:
+      - prefect-network
 
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: prefect-pipe
+      POSTGRES_USER: ${APP_CONFIG__DB__USERNAME}
+      POSTGRES_PASSWORD: ${APP_CONFIG__DB__PASSWORD}
+      POSTGRES_DB: ${APP_CONFIG__DB__DATABASE}
     restart: unless-stopped
     ports:
       - "5438:5432"
     
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - prefect-network
 
   minio:
     container_name: prefect-minio
     image: minio/minio:RELEASE.2023-03-20T20-16-18Z
     environment:
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${APP_CONFIG__S3__ACCESS_KEY}
+      MINIO_SECRET_KEY: ${APP_CONFIG__S3__SECRET_KEY}
     ports:
       - "9001:9001"
       - "9000:9000"
@@ -45,9 +47,14 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
-
+    networks:
+      - prefect-network
 
 volumes:
   postgres_data:
   minio_data:
   prefect_data:
+
+networks:
+  prefect-network:
+    driver: bridge

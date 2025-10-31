@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     name="get_weather_history",
     cache_policy=cshp.TASK_SOURCE + cshp.INPUTS,
     cache_expiration=timedelta(
-        seconds=30,
+        minutes=60,
     ),
 )
 def get_weather_history(

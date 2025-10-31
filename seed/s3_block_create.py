@@ -27,6 +27,6 @@ def create_s3_block():
     except ValueError as e:
         s3_block.save(settings.s3.bucket)
         s3_client = s3_block.credentials.get_s3_client()
-        s3_client.create_bucket(Bucket=settings.s3.bucket)
+        # s3_client.create_bucket(Bucket=settings.s3.bucket)
         print("S3 bucket created")
         return
