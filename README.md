@@ -73,6 +73,7 @@ The pipeline fetches weather data from a public API, stores raw data in S3, proc
 - After the first run, open the Prefect UI → Blocks → “AWS Credentials”, edit it, and manually set the **endpoint_url** for MinIO.
   - `http://minio:9000` - only with docker ‼️
   - `http:localhost:9000` - for local
+    ![Endpoint_pic](assets/endpoint_example.png)
 - Environment variables (API URL, credentials, DB, etc.) are managed via `.env` and loaded by `docker-compose`.
 - The Prefect API URL inside Docker is:  
    `http://prefect-server:4200/api`
