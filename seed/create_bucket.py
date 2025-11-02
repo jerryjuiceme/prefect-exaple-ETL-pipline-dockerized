@@ -13,6 +13,6 @@ def ensure_bucket_exists():
     buckets = [b["Name"] for b in s3.list_buckets()["Buckets"]]
     if settings.s3.bucket not in buckets:
         s3.create_bucket(Bucket=settings.s3.bucket)
-        print(f"✅ Bucket '{settings.s3.bucket}' created.")
+        print(f"Bucket '{settings.s3.bucket}' created.")
     else:
-        print(f"ℹ️ Bucket '{settings.s3.bucket}' already exists.")
+        print(f"Bucket '{settings.s3.bucket}' already exists.")
