@@ -184,7 +184,7 @@ def cleanup_s3(
 @flow
 def weather_etl_s3(
     date: str = pendulum.today().format("YYYY-MM-DD"),
-    city: str = "Minsk",
+    city: str = "Paris",
 ) -> None:
     """Prefect flow:
         Extracting weather data from openweathermap.org and loading it to postgres
@@ -194,7 +194,7 @@ def weather_etl_s3(
 
     Args:
         date (str, optional): _description_. Defaults to pendulum.today().format("YYYY-MM-DD").
-        city (str, optional): _description_. Defaults to "Minsk  ".
+        city (str, optional): _description_. Defaults to "Paris".
     """
 
     logger = get_run_logger()
