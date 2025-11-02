@@ -6,7 +6,6 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).parent.parent
-# BASE_DIR = Path(__file__).parent
 
 
 class PrefectConfig(BaseModel):
@@ -56,7 +55,6 @@ class S3(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        # env_file=(".env.template", ".env"),
         env_file=(BASE_DIR / ".env.template", BASE_DIR / ".env"),
         case_sensitive=False,
         env_nested_delimiter="__",

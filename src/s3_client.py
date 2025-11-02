@@ -30,24 +30,19 @@ class S3Controller:
     @property
     def s3_client(self) -> S3Bucket:
         if self._storage is None:
-
             self._storage = self._load_bucket()
         return self._storage  # type: ignore
 
     def close(self):
         if self._storage is not None:
-
             self._storage = None
 
     def _load_bucket(self):
-
         try:
             bucket_s3 = S3Bucket.load(settings.s3.bucket)
         except ValueError:
-
             create_s3_block()
             bucket_s3 = S3Bucket.load(settings.s3.bucket)
-
         return bucket_s3
 
 
