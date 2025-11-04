@@ -4,6 +4,8 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+.PHONY: up down seed deploy worker build logs
+
 # Start all docker services
 up:
 	docker network create prefect-network || true
