@@ -4,7 +4,7 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
-.PHONY: up down seed deploy worker build logs
+.PHONY: up down seed deploy worker build logs pool
 
 # Start all docker services
 up:
@@ -22,6 +22,10 @@ seed:
 # Run Prefect deployment
 deploy:
 	uv run deploy.py
+
+# Create Prefect worker pool
+pool:
+	prefect work-pool create 'basic-pipe' --type process
 
 # Start Prefect worker locally
 worker:
